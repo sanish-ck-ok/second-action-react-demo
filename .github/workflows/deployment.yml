@@ -5,7 +5,7 @@
 #      runs-on: ubuntu-latest
 #      steps:
 #       -name: Get Code
-name: Test Project
+name: Deploy Project
 on: push
 jobs: 
   test:
@@ -21,3 +21,19 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
+
+  deploy:
+    runs-on: macos-13
+    steps:
+       - name: Get Code
+        uses: actions/checkout@v3
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with: 
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Build project
+        run: npm run abuild
+      - name: Deploy
+        run: echo "Deploying..."
